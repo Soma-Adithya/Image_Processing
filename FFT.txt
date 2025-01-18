@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the image in grayscale
+img = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg", cv2.IMREAD_GRAYSCALE)
+
+# Apply FFT
+f_transform = np.fft.fft2(img)
+f_transform_shifted = np.fft.fftshift(f_transform)
+magnitude_spectrum = 20 * np.log(np.abs(f_transform_shifted))
+
+# Display the original image
+plt.subplot(131), plt.imshow(img, cmap='gray')
+plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+
+# Display the magnitude spectrum
+plt.subplot(132), plt.imshow(magnitude_spectrum, cmap='gray')
+plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
+
+plt.show()
+
+

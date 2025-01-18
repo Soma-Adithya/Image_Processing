@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+import math
+
+# Load the image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\Noise_salt_image.png", cv2.IMREAD_GRAYSCALE)
+
+# Define the coordinates or the ROI (e.g., a rectangular region)
+roi = image[100:200, 100:200]  # Adjust these coordinates as per your image
+
+# Calculate the variance of the ROI
+variance_noise = np.var(roi)
+
+# Assuming you have the variance of the entire image (signal variance)
+variance_signal = np.var(image)
+
+# Calculate the Signal-to-Noise Ratio (SNR) in dB
+snr_db = 10 * math.log10(variance_signal / variance_noise)
+
+print(f"Signal Variance: {variance_signal}")
+print(f"Noise Variance: {variance_noise}")
+print(f"Signal-to-Noise Ratio (SNR) in dB: {snr_db} dB")
+

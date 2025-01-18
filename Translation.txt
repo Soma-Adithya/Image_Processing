@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+#Reading image and parameters
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+image1 = cv2.resize(image,(500,500))
+height,width = image1.shape[0:2]
+required_width = width/2
+required_height = height/2
+
+#Translating image
+T = np.float32([[1, 0, required_width], [0, 1, required_height]])
+Translated_image = cv2.warpAffine(image1,T,(width,height))
+
+#Showing image
+cv2.imshow("Original", image1)
+cv2.imshow('Translation', Translated_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+

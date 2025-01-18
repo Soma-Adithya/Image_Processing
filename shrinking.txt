@@ -1,0 +1,25 @@
+import cv2
+
+# Load the image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+# New dimensions
+new_width = 300  # Example width
+new_height = 350  # Example height
+
+# Resize using new dimensions
+shrinked_image = cv2.resize(image, (new_width, new_height),interpolation=cv2.INTER_AREA)
+
+# Display the resized image
+cv2.imshow('Shrinked', shrinked_image)
+cv2.waitKey(0) 
+cv2.destroyAllWindows() 
+
+ 
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+import cv2
+
+#Reading image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+resized_img = cv2.resize(image, (500,500))
+
+#Converting into grey-scale
+grayscale_image = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
+
+#Threshold
+threshold_value = 150
+
+# Set to 0 thresholding
+a, thresholded_set_to_0 = cv2.threshold(grayscale_image, threshold_value, 255, cv2.THRESH_TOZERO)
+
+# Set to 0 Inverted thresholding
+b, thresholded_set_to_0_inverted = cv2.threshold(grayscale_image, threshold_value, 255, cv2.THRESH_TOZERO_INV)
+
+# Truncated thresholding
+c, thresholded_truncated = cv2.threshold(grayscale_image, threshold_value, 255, cv2.THRESH_TRUNC)
+
+# Binary thresholding
+d, thresholded_binary = cv2.threshold(grayscale_image, threshold_value, 255, cv2.THRESH_BINARY)
+
+# Binary threshold Inverted
+e, thresholded_binary_inverted = cv2.threshold(grayscale_image, threshold_value, 255, cv2.THRESH_BINARY_INV)
+
+# Display or save the thresholded images as needed
+cv2.imshow('Thresholded Set to 0', thresholded_set_to_0)
+cv2.imshow('Thresholded Set to 0 Inverted', thresholded_set_to_0_inverted)
+cv2.imshow('Thresholded Truncated', thresholded_truncated)
+cv2.imshow('Thresholded Binary', thresholded_binary)
+cv2.imshow('Thresholded Binary Inverted', thresholded_binary_inverted)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+

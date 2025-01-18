@@ -1,0 +1,45 @@
+import cv2
+import numpy as np
+
+def hough_line_detection(image_path, threshold):
+    # Read the image and resize
+    image = cv2.imread(image_path)
+    image = cv2.resize(image,(400,400))
+    cv2.imshow('Original',image)
+
+    # Convert the image to grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    # Apply edge detection (you can use Canny or other edge detection methods)
+    edges = cv2.Canny(gray, 50, 150, apertureSize=3)
+    
+    # Perform Hough Line Transformation
+    lines = cv2.HoughLines(edges, 1, np.pi / 180, threshold)
+
+    # Draw the detected lines on the image
+    if lines is not None:
+        for line in lines:
+            rho, theta = line[0]
+            a = np.cos(theta)
+            b = np.sin(theta)
+            x0 = a * rho
+            y0 = b * rho
+            x1 = int(x0 + 1000 * (-b))
+            y1 = int(y0 + 1000 * (a))
+            x2 = int(x0 - 1000 * (-b))
+            y2 = int(y0 - 1000 * (a))
+            cv2.line(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+    # Display the original image and the one with detected lines
+    cv2.imshow('Lines Image', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+# Specify the path to your image
+image_path = r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg"
+
+# Set the Hough Line Transformation threshold (adjust as needed)
+threshold_value = 100
+
+# Apply Hough Line Transformation and display the results
+hough_line_detection(image_path, threshold_value)

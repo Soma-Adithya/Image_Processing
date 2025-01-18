@@ -1,0 +1,20 @@
+import cv2
+import numpy as np
+#Reading images
+image1 = cv2.imread(r'C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg')
+#Resizing images to equal size
+image1=cv2.resize(image1,(300,300))
+#Changing mean
+mean = np.mean(image1)
+target_mean = 200
+meanshift = target_mean - mean
+#By adding a value to all pixels
+#Create new image
+image11 = cv2.add(image1,meanshift)
+image12 = cv2.subtract(image1,meanshift)
+#showing  new image
+cv2.imshow('image1',image1)
+cv2.imshow('image11',image11)
+cv2.imshow('image12',image12)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

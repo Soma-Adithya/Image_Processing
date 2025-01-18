@@ -1,0 +1,28 @@
+#Use binary image
+import cv2
+import numpy as np
+
+###Convert color image to binary image
+# Read the input color image
+color_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+color_image = cv2.resize(color_image,(500,500))
+# Convert the color image to grayscale
+gray_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2GRAY)
+# Set a threshold value (adjust as needed)
+threshold_value = 128
+# Apply binary thresholding
+_, binary_image = cv2.threshold(gray_image, threshold_value, 255, cv2.THRESH_BINARY)
+cv2.imshow("Binary",binary_image)
+
+##HOLE FILLING
+image = binary_image
+# Find contours of holes
+contours, _ = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+# Create a copy of the input image for visualization
+contour_image = binary_image.copy()
+# Draw contours on the copy
+cv2.drawContours(contour_image, contours, -1, (255, 255, 255), 2)
+cv2.imshow('HOLE FILLING', contour_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows
+

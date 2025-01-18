@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+
+# Load the magnitude spectrum image
+magnitude_spectrum = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\magnitude_spectrum.jpg", cv2.IMREAD_GRAYSCALE)
+
+
+# Apply IFFT to reconstruct the image
+magnitude_spectrum_complex = np.exp(magnitude_spectrum * 1j)
+img_reconstructed = np.fft.ifft2(np.fft.ifftshift(magnitude_spectrum_complex)).real
+
+# Normalize the reconstructed image to the range [0, 255]
+img_reconstructed = cv2.normalize(img_reconstructed, None, 0, 255, cv2.NORM_MINMAX)
+
+# Display the magnitude spectrum
+cv2.imshow('Magnitude Spectrum', magnitude_spectrum)
+# Display the reconstructed image
+cv2.imshow('Reconstructed Image', img_reconstructed.astype(np.uint8))
+cv2.waitKey(0)
+cv2.destroyAllWindows()

@@ -1,0 +1,23 @@
+import cv2
+
+#Reading image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+resized_img = cv2.resize(image, (500,500))
+
+#Obtaining flip image(Horizontal and Vertical)
+##############
+#Horizontal
+flipped_image_Horizontal = cv2.flip(resized_img, 1)
+
+#Vertical
+flipped_image_Vertical = cv2.flip(resized_img, 0)
+
+#Showing image
+cv2.imshow("Horizontal",flipped_image_Horizontal)
+cv2.imshow("Vertical",flipped_image_Vertical)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+

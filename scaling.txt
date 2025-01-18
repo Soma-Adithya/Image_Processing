@@ -1,0 +1,17 @@
+import cv2
+
+#Reading image
+orginal_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+#Scaling image
+scaled_image = cv2.resize(orginal_image,(50,400))
+
+#showing image
+cv2.imshow("Original",orginal_image)
+cv2.imshow("Scaled",scaled_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+

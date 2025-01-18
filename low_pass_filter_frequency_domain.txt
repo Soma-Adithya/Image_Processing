@@ -1,0 +1,76 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read the image
+img = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg", cv2.IMREAD_GRAYSCALE)
+img = cv2.resize(img, (400, 400))
+
+# Fourier Transform
+f_transform = np.fft.fft2(img)
+f_transform_shifted = np.fft.fftshift(f_transform)
+
+# Visualize the original image and its frequency domain
+plt.figure(figsize=(8, 4))
+
+plt.subplot(121)
+plt.imshow(img, cmap='gray')
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(122)
+plt.imshow(np.log1p(np.abs(f_transform_shifted)), cmap='gray')
+plt.title('Frequency Domain')
+plt.axis('off')
+plt.show()
+
+# Create Gaussian Low-Pass Filter
+rows, cols = img.shape
+crow, ccol = rows // 2 , cols // 2
+D0 = 30  # Adjust the cutoff frequency as needed
+
+mask = np.zeros((rows, cols), dtype=np.uint8)
+cv2.circle(mask, (ccol, crow), D0, 1, -1)
+
+# Apply the low-pass filter
+f_transform_shifted_filtered = f_transform_shifted * mask
+
+# Inverse Fourier Transform
+img_filtered = np.abs(np.fft.ifft2(np.fft.ifftshift(f_transform_shifted_filtered)))
+
+# Visualize the low-pass filtered image and its frequency domain
+plt.figure(figsize=(8, 4))
+
+plt.subplot(121)
+plt.imshow(img_filtered, cmap='gray')
+plt.title('Low-Pass Filtered Image')
+plt.axis('off')
+
+plt.subplot(122)
+plt.imshow(np.log1p(np.abs(f_transform_shifted_filtered)), cmap='gray')
+plt.title('Filtered Frequency Domain')
+plt.axis('off')
+plt.show()
+
+# Create Gaussian High-Pass Filter
+mask_high_pass = 1 - mask
+
+# Apply the high-pass filter
+f_transform_shifted_high_pass = f_transform_shifted * mask_high_pass
+
+# Inverse Fourier Transform
+img_high_pass = np.abs(np.fft.ifft2(np.fft.ifftshift(f_transform_shifted_high_pass)))
+
+# Visualize the high-pass filtered image and its frequency domain
+plt.figure(figsize=(8, 4))
+
+plt.subplot(121)
+plt.imshow(img_high_pass, cmap='gray')
+plt.title('High-Pass Filtered Image')
+plt.axis('off')
+
+plt.subplot(122)
+plt.imshow(np.log1p(np.abs(f_transform_shifted_high_pass)), cmap='gray')
+plt.title('Filtered Frequency Domain')
+plt.axis('off')
+plt.show()

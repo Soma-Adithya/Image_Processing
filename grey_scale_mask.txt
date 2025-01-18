@@ -1,0 +1,45 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read the color image and the mask image
+color_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+mask_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\MASK-2.png")
+
+# Resize both the color and mask images
+color_image1 = cv2.resize(color_image, (400, 400))
+mask_image1 = cv2.resize(mask_image, (400, 400))
+
+#covert into grey scale
+color_image = cv2.cvtColor(color_image1, cv2.COLOR_BGR2GRAY)
+mask_image = cv2.cvtColor(mask_image1, cv2.COLOR_BGR2GRAY)
+
+# Apply the mask to the color image
+masked_image = cv2.bitwise_and(color_image, mask_image)
+
+cv2.imshow("masked image",masked_image)
+cv2.waitKey(0)
+
+# Calculate histograms for both the masked and unmasked grayscale images
+hist_color = cv2.calcHist([color_image], [0], None, [256], [0, 256])
+hist_masked = cv2.calcHist([masked_image], [0], None, [256], [0, 256])
+
+# Plot the histograms using Matplotlib
+plt.figure(figsize=(12, 6))
+
+plt.subplot(121)
+plt.plot(hist_color)
+plt.title('Histogram of grey Image')
+plt.xlim([0, 256])
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.subplot(122)
+plt.plot(hist_masked)
+plt.title('Histogram of Masked grey Image')
+plt.xlim([0, 256])
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.show()
+

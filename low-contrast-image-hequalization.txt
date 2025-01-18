@@ -1,0 +1,74 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read the image using OpenCV
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+# Convert the image to grayscale 
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Define the minimum and maximum desired pixel values for the high-contrast image
+min_pixel_value = 0
+max_pixel_value = 255
+
+# Find the minimum and maximum pixel values in the original grayscale image
+min_original = np.min(gray_image)
+max_original = np.max(gray_image)
+
+# Perform contrast stretching
+high_contrast_image = np.uint8((gray_image - min_original) * (max_pixel_value - min_pixel_value) / (max_original - min_original) + min_pixel_value)
+
+# Apply histogram equalization to the high-contrast image
+equalized_image = cv2.equalizeHist(high_contrast_image)
+
+# Calculate and plot the histogram and CDF of the high-contrast image
+hist_high_contrast = cv2.calcHist([high_contrast_image], [0], None, [256], [0, 256])
+
+# Calculate and plot the histogram and CDF of the equalized image
+hist_equalized = cv2.calcHist([equalized_image], [0], None, [256], [0, 256])
+
+# Create an array for pixel values from 0 to 255
+pixel_values = np.arange(256)
+
+# Calculate CDF for both the high-contrast and equalized images
+cdf_high_contrast = np.cumsum(hist_high_contrast)
+cdf_equalized = np.cumsum(hist_equalized)
+
+# Normalize CDF values to [0, 1]
+cdf_high_contrast_normalized = cdf_high_contrast / cdf_high_contrast[-1]
+cdf_equalized_normalized = cdf_equalized / cdf_equalized[-1]
+
+# Plot the histograms and CDFs for both images
+plt.figure()
+
+plt.subplot(131)
+plt.hist(high_contrast_image.flatten(), 256, [0, 256], color='b', alpha=0.7, rwidth=0.85, label='Histogram')
+plt.title('High-Contrast Image Histogram')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.legend()
+
+plt.subplot(132)
+plt.hist(equalized_image.flatten(), 256, [0, 256], color='r', alpha=0.7, rwidth=0.85, label='Histogram')
+plt.title('Equalized Image Histogram')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.legend()
+
+plt.subplot(133)
+plt.plot(pixel_values, cdf_high_contrast_normalized, color='b', label='High-Contrast Image')
+plt.plot(pixel_values, cdf_equalized_normalized, color='r', label='Equalized Image')
+plt.title('CDF Comparison')
+plt.xlabel('Pixel Value')
+plt.ylabel('CDF Value')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Display the high-contrast and equalized images
+cv2.imshow('High-Contrast Image', high_contrast_image)
+cv2.imshow('Equalized Image', equalized_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

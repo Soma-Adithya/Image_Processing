@@ -1,0 +1,26 @@
+import cv2
+import matplotlib.pyplot as plt
+
+# Read the color image using OpenCV
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+#Converting into grey-scale
+grayscale_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Calculate histogram
+hist = cv2.calcHist([image], [0], None, [256], [0, 256])
+
+# Plot the histogram
+plt.plot(hist, color='grey',label = "_grey")
+
+# Customize the plot
+plt.title('RGB Histogram')
+plt.xlim([0, 256])
+plt.ylabel('Frequency')
+
+# Show the plot
+plt.show()
+
+
+
+

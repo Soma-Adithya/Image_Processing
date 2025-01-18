@@ -1,0 +1,29 @@
+import numpy as np
+import cv2
+
+# Load the noisy image
+noisy_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\Noise_salt_image.png", cv2.IMREAD_GRAYSCALE)
+
+# Define a kernel (Point Spread Function or PSF) with the same dimensions as the image
+kernel_size = (5, 5)
+kernel = np.ones(kernel_size) / np.prod(kernel_size)
+
+# Estimate the noise variance (you may need to determine this empirically)
+noise_variance = 1.07
+
+# Compute the Fourier transforms of the image and kernel
+image_fft = np.fft.fft2(noisy_image)
+kernel_fft = np.fft.fft2(kernel, s=noisy_image.shape)
+
+# Compute the Wiener filter in the frequency domain
+wiener_filter_fft = np.conj(kernel_fft) / (np.abs(kernel_fft) ** 2 + noise_variance)
+
+# Apply the inverse Fourier transform to get the filtered image
+filtered_image_fft = image_fft * wiener_filter_fft
+filtered_image = np.fft.ifft2(filtered_image_fft).real
+
+# Display the noisy and filtered images
+cv2.imshow('Noisy Image', noisy_image)
+cv2.imshow('Filtered Image', filtered_image.astype(np.uint8))
+cv2.waitKey(0)
+cv2.destroyAllWindows()

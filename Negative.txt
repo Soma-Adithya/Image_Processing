@@ -1,0 +1,18 @@
+import cv2
+
+#Reading image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+resized_img = cv2.resize(image, (500,500))
+
+#Converting into grey-scale
+grayscale_image = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
+
+#Obtaining Negative image
+negative_image = 255-grayscale_image
+
+#Showing image
+cv2.imshow("Original",resized_img)
+cv2.imshow("Negative",negative_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+

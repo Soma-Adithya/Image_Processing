@@ -1,0 +1,33 @@
+
+import cv2
+import matplotlib.pyplot as plt
+
+# Read the color image using OpenCV
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+
+# Split the image into its RGB channels
+b, g, r = cv2.split(image)
+
+# Calculate histograms for each channel
+hist_b = cv2.calcHist([b], [0], None, [256], [0, 256])
+hist_g = cv2.calcHist([g], [0], None, [256], [0, 256])
+hist_r = cv2.calcHist([r], [0], None, [256], [0, 256])
+
+# Plot the histograms as line plots with different colors
+plt.plot(hist_r, color='red', label='Red')
+plt.plot(hist_g, color='green', label='Green')
+plt.plot(hist_b, color='blue', label='Blue')
+
+# Customize the plot
+plt.title('RGB Histogram')
+plt.xlim([0, 256])
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.legend()
+
+# Show the plot
+plt.show()
+
+
+

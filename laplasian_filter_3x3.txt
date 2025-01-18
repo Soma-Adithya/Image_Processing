@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+original_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+original_image = cv2.resize(original_image,(400,400))
+
+# Apply a 3x3 Laplacian filter
+laplacian = cv2.Laplacian(original_image, cv2.CV_64F)
+laplacian = cv2.convertScaleAbs(laplacian)
+
+# Add the Laplacian to the original image to sharpen it
+sharpened_image = cv2.addWeighted(original_image, 1.5, laplacian, -0.5, 0)
+
+# Display the images using OpenCV's imshow
+cv2.imshow('Original Image', original_image)
+cv2.imshow('Laplacian Filter', laplacian)
+cv2.imshow('Sharpened Image', sharpened_image)
+
+# Wait for a key press and then close the windows
+cv2.waitKey(0)
+cv2.destroyAllWindows()

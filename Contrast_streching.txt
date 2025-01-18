@@ -1,0 +1,28 @@
+import cv2
+import numpy as np
+
+#Reading image
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+resized_img = cv2.resize(image, (500,500))
+
+#Converting into grey-scale
+grayscale_image = cv2.cvtColor(resized_img, cv2.COLOR_BGR2GRAY)
+
+#Max and Min Pixel values
+Min_intensity = np.min(grayscale_image)
+Max_intensity = np.max(grayscale_image)
+
+#Apply Contrast streching
+contrast_stretched_image = ((grayscale_image - Min_intensity) * 255.0 / (Max_intensity - Min_intensity)).astype(np.uint8)
+
+# Convert the contrast-stretched grayscale image back to BGR format
+contrast_stretched_bgr = cv2.cvtColor(contrast_stretched_image, cv2.COLOR_GRAY2BGR)
+
+#Show image
+cv2.imshow("contrast_stretched",contrast_stretched_bgr)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+

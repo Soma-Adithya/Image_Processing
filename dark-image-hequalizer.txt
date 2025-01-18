@@ -1,0 +1,43 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read the image using OpenCV
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+# Convert the image to grayscale 
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Decrease the intensity of pixel values to make the image darker
+dark_intensity_factor = 0.5  # You can adjust this factor to control the darkness
+dark_image = (gray_image * dark_intensity_factor).astype(np.uint8)
+
+#show image
+cv2.imshow("Dark image",dark_image)
+cv2.waitKey(0)
+
+# Calculate the histogram and CDF of the dark image
+hist, bins = np.histogram(dark_image.flatten(), 256, [0, 256])
+cdf = hist.cumsum()
+cdf_normalized = cdf / cdf.max()
+
+# Plot the histogram and CDF together
+plt.figure(figsize=(12, 6))
+
+plt.subplot(121)
+plt.hist(dark_image.flatten(), 256, [0, 256], color='red', alpha=0.7, rwidth=0.85, label='Histogram')
+plt.title('Dark Image Histogram with CDF')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.legend()
+
+plt.subplot(122)
+plt.plot(cdf_normalized, color='blue')
+plt.title('CDF')
+plt.xlabel('Pixel Value')
+plt.ylabel('CDF Value')
+
+plt.tight_layout()
+plt.show()
+
+

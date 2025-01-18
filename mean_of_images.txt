@@ -1,0 +1,14 @@
+import cv2
+#Reading images
+image1 = cv2.imread(r'C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg')
+image2 = cv2.imread(r'C:\Users\somaa\Desktop\DIP Lab\nature.jpg')
+#Resizing images to equal size
+image1=cv2.resize(image1,(500,500))
+image2=cv2.resize(image2,(500,500))
+#finding means of images
+result1 = cv2.mean(image1)
+result2 = cv2.mean(image2)
+#printing mean of tuple(putput for cv2.mean)
+print("Mean of image1:",sum(result1)/(len(result1)-1))
+print("Mean of image2:",sum(result2)/(len(result2)-1))
+

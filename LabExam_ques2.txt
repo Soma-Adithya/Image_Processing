@@ -1,0 +1,21 @@
+import cv2
+
+image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+image = cv2.resize(image,(400,400))
+
+cv2.imshow("Original",image)
+cv2.waitKey(0)
+
+gray_image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+
+
+image = cv2.GaussianBlur(gray_image,(3,3),0)
+
+
+image_x = cv2.Sobel(image,cv2.CV_64F,1,0,ksize=5)
+image_y = cv2.Sobel(image,cv2.CV_64F,0,1,ksize=5)
+result = image_x + image_y
+
+cv2.imshow("Sobel",result)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

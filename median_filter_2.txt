@@ -1,0 +1,14 @@
+import cv2
+
+# Load the noisy image
+noisy_image = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\Noise_salt_image.png")
+
+# Reduce Gaussian noise using a median filter
+kernel_size = 5
+filtered_image = cv2.medianBlur(noisy_image, kernel_size)
+
+# Display the noisy and filtered images
+cv2.imshow('Noisy Image', noisy_image)
+cv2.imshow('Filtered Image', filtered_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()

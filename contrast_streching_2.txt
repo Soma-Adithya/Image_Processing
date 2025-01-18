@@ -1,0 +1,25 @@
+import cv2
+import numpy as np
+
+# Read the image
+img = cv2.imread(r"C:\Users\somaa\Desktop\DIP Lab\DIP week 1.jpg")
+
+# Convert to grayscale
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+# Find the minimum and maximum pixel values
+minval = np.min(img)
+maxval = np.max(img)
+
+# Create a lookup table
+lut = np.interp(np.arange(256), [minval, maxval], [0, 255])
+
+# Apply the lookup table
+img_stretched = cv2.LUT(img, lut)
+
+# Display the original and stretched images
+cv2.imshow('Original', img)
+cv2.imshow('Stretched', img_stretched)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
